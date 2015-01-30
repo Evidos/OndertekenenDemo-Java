@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.net.ssl.SSLContext;
+import javax.ws.rs.core.MediaType;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +27,9 @@ import java.util.Map;
  * Created by Yuri Meiburg on 29-1-2015.
  */
 public class RESTEngine {
-    public static final String JSON = "application/json; charset=utf-8";
 
     private static final Logger LOGGER = LogManager.getLogger(RESTEngine.class);
+    public static final String APPLICATION_PDF = "application/pdf";
     private Client client = createSSLClient();
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private Map<String, String> defaultHeaders;
@@ -36,7 +37,6 @@ public class RESTEngine {
     /**
      * Create a RESTEngine object, which has default headers appended to every call
      * @param defaultHeaders A Map of the headers
-     * @return A RESTEngine object which has the default headers appended to every call
      */
     public RESTEngine (Map<String, String> defaultHeaders){
         this.defaultHeaders = defaultHeaders;
@@ -75,7 +75,7 @@ public class RESTEngine {
      */
     public <T extends ModelObject> Response<T> post(String targetUrl, Class<T> returnType,Object postData, String contentType, String ... acceptingTypes){
         WebResource.Builder webResourceBuilder = getWebResourceBuilder(targetUrl);
-        if(contentType == null) contentType = JSON;
+        if(contentType == null) contentType = MediaType.APPLICATION_JSON;
         try {
             ClientResponse clientResponse = webResourceBuilder
                     .accept(acceptingTypes)
@@ -100,7 +100,7 @@ public class RESTEngine {
      */
     public <T extends ModelObject> Response<T> delete(String targetUrl, Class<T> returnType,Object postData, String contentType, String ... acceptingTypes){
         WebResource.Builder webResourceBuilder = getWebResourceBuilder(targetUrl);
-        if(contentType == null) contentType = JSON;
+        if(contentType == null) contentType = MediaType.APPLICATION_JSON;
         try {
             ClientResponse clientResponse = webResourceBuilder
                     .accept(acceptingTypes)
@@ -114,12 +114,38 @@ public class RESTEngine {
     }
 
     /**
+     * Perform an SSL REST PUT request to a given URL. If the request succeeds, parse the result
+     * to type {@code returnType}, and return the result.
+     * @param <T> Type of the JSON result object
+     * @param targetUrl The url to perform the REST call on
+     * @param returnType The target class for the resulting JSON object
+     * @param postData The data to be POSTed to the REST-service.
+     * @param contentType The type of data contained by postData
+     * @param acceptingTypes One or more valid return types
+     * @return A ModelObject of class {@code returnType} upon success.
+     */
+    public <T extends ModelObject> Response<T> put(String targetUrl, Class<T> returnType,Object postData, String contentType, String ... acceptingTypes){
+        WebResource.Builder webResourceBuilder = getWebResourceBuilder(targetUrl);
+        if(contentType == null) contentType = MediaType.APPLICATION_JSON;
+        try {
+            ClientResponse clientResponse = webResourceBuilder
+                    .accept(acceptingTypes)
+                    .type(contentType)
+                    .put(ClientResponse.class, postData);
+            return handleResponse(clientResponse, returnType);
+        }catch(ClientHandlerException ce){
+            LOGGER.error("Cannot connect to the webservice, returning empty document.", ce);
+            return Response.unavailable(ce.getMessage());
+        }
+    }
+
+    /**
      * Parse ClientResponse
      * Extract the result from ClientResponse and try to parse it to type {@code returnType}
      * @param clientResponse The response from the REST service
-     * @param returnType The desired return type
+     * @param returnType The desired return type -- null means no result.
      * @param <T> Type of the result object
-     * @return A Response<T> with either a succes-message and an object of {@code returnType}, or an error of type ErrorMessage
+     * @return A Response&lt;T&gt; with either a success-message and an object of {@code returnType}, or an error of type ErrorMessage
      */
     private <T extends ModelObject> Response<T> handleResponse(ClientResponse clientResponse, Class<T> returnType){
                 /* Handle response */
@@ -129,7 +155,11 @@ public class RESTEngine {
                     gson.fromJson(clientResponse.getEntity(String.class), ErrorMessage.class));
         }
 
-        return Response.success(gson.fromJson(clientResponse.getEntity(String.class), returnType));
+        if(returnType != null) {
+            return Response.success(gson.fromJson(clientResponse.getEntity(String.class), returnType));
+        }else {
+            return Response.success(null);
+        }
     }
 
     /**
@@ -150,7 +180,7 @@ public class RESTEngine {
         }
         clientConfig.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties((a,b)->true , sslContext));
         Client client = Client.create(clientConfig);
-        //client.addFilter(new LoggingFilter(System.out));
+        client.addFilter(new LoggingFilter(System.out));
         return client;
     }
 

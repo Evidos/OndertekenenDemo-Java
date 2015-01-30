@@ -9,15 +9,26 @@ import com.google.gson.annotations.SerializedName;
 public class FileInfo {
     @SerializedName("Name")
     private String name = null;
+    @SerializedName("Id")
+    private String id = null;
 
-    public FileInfo(String fileName){
-        name = fileName;
+    public FileInfo(String name){
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
     public String toString() {
         return "FileInfo{" +
                 "name='" + name + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }
