@@ -19,7 +19,13 @@ public class Demo {
     private static final Logger LOGGER = LogManager.getLogger(Demo.class);
 
     /**
-     * Construct a Demo object
+     * Show the API for Ondertekenen.nl
+     * The aim is to show a complete flow for signing documents using the Ondertekenen.nl service. The first step is
+     * to create a new transaction, and get the result from the server. If all went well, a PDF file is uploaded.
+     * Then the recipient should be notified, this happens automatically by the service. The program will wait, and
+     * poll at a given interval to see if the document has been signed. As soon as the document has been signed, the
+     * signed document is retrieved, plus the receipt.
+     * <b>Note: </b>This flow is not realistic in practice, as blocking until a user has signed is not exactly efficient
      * @param ondertekenenClient - The DAO for the Ondertekenen service.
      */
     public Demo(OndertekenenClient ondertekenenClient){
@@ -40,7 +46,8 @@ public class Demo {
         }
 
         /* Get the newly created transaction */
-        LOGGER.info("Got the following transaction from server: " + ondertekenenClient.getTransaction(transactionResponse.getResult().getId()));
+        transactionResponse = ondertekenenClient.getTransaction(transactionResponse.getResult().getId());
+        LOGGER.info("Got the following transaction from server: " + (transactionResponse.getResult().getId()));
 
         /* Upload a file! */
         Response<ModelObject> fileResponse = ondertekenenClient.uploadFile(
@@ -56,8 +63,26 @@ public class Demo {
             return;
         }
 
+        /* Block until the user has signed: */
+        while(  transactionResponse.getResult().getStatus() == TransactionStatus.WAITING_FOR_DOCUMENT.value() ||
+                transactionResponse.getResult().getStatus() == TransactionStatus.WAITING_FOR_SIGNER.value() ||
+                transactionResponse.getResult().getStatus() == TransactionStatus.IN_PROGRESS.value()){
+            try {
+                Thread.sleep(60000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            transactionResponse = ondertekenenClient.getTransaction(transactionResponse.getResult().getId());
+            LOGGER.info("Transaction is now in state: " + (transactionResponse.getResult().getStatus()));
+
+        }
+
+        /* The user has either Signed or Rejected the transaction! Get the signed document + receipt. */
+
+
         /* Delete the transaction */
         LOGGER.info("Deleted the following transaction: " + ondertekenenClient.deleteTransaction(transactionResponse.getResult(), true, "Testing."));
+
     }
 
     /**
