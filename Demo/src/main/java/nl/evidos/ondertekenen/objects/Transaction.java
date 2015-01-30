@@ -106,7 +106,7 @@ public class Transaction implements ModelObject {
         return this;
     }
 
-    /** GENERATED GETTERS **/
+    /* GENERATED GETTERS */
     public String getId() {
         return id;
     }

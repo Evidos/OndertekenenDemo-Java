@@ -32,17 +32,21 @@ public class Helper {
 
     /**
      * Create a new FileInfo object
-     * @return return a demo {@see FileInfo} object.
+     * @return return a demo {@code FileInfo} object.
+     * @see nl.evidos.ondertekenen.objects.FileInfo
      */
     public static FileInfo createDemoFileInfo(){
-        return new FileInfo("demodoc.pdf");
+        return new FileInfo("test.pdf");
     }
 
     /**
      * Createa demo transaction
-     * @param fileInfo The {@see FileInfo} for the transaction
-     * @param signers The {@see Signer} array for the transaction
-     * @return a demo {@Transaction} object
+     * @param fileInfo The {@code FileInfo} for the transaction
+     * @param signers The {@code Signer} array for the transaction
+     * @see nl.evidos.ondertekenen.objects.FileInfo
+     * @see nl.evidos.ondertekenen.objects.Signer
+     * @see nl.evidos.ondertekenen.objects.Transaction
+     * @return a demo {@code Transaction} object
      */
     public static Transaction createDemoTransaction(FileInfo fileInfo, Signer [] signers){
         return new Transaction(fileInfo, signers)

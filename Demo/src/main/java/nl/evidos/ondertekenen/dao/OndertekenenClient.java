@@ -2,6 +2,7 @@ package nl.evidos.ondertekenen.dao;
 
 import nl.evidos.ondertekenen.objects.*;
 
+import java.io.File;
 import java.net.URL;
 
 /**
@@ -80,7 +81,9 @@ public interface OndertekenenClient {
 
     /**
      * Execute REST Call to upload a PDF
+     * @param transaction The transaction for which the file should be appended
      * @param file The location of the file to upload
+     * @return Response object containing null upon success, and an ErrorMessage if something went wrong.
      */
-    void uploadFile(URL file);
+    Response<ModelObject> uploadFile(Transaction transaction, File file);
 }

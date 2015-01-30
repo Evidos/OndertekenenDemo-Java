@@ -162,11 +162,7 @@ public class Signer {
     }
 
 
-    /** GENERATED GETTERS **/
-    public static Logger getLogger() {
-        return LOGGER;
-    }
-
+    /* GENERATED GETTERS */
 
     public String getEMail() {
         return eMail;
