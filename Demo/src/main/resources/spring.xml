@@ -1,0 +1,12 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="ondertekenenClient" class="nl.evidos.ondertekenen.dao.OndertekenenClientRestImpl">
+        <constructor-arg value="yuritest" />    <!-- App name -->
+        <constructor-arg value="g3xBwNd7OhSzPauaez9PxdtBzmEO69mw" /> <!-- App Key -->
+        <constructor-arg value="p1QgDzuhgwt9288toy5QNNPwv3ooPvZj" /> <!-- Api Key -->
+    </bean>
+
+</beans>
