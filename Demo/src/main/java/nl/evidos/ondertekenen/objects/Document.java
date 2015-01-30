@@ -5,7 +5,7 @@ package nl.evidos.ondertekenen.objects;
  * Created by Yuri Meiburg on 14-1-2015.
  */
 public class Document implements ModelObject {
-    private int documentId;
+    private byte [] documentId;
 
     public String toString() {
 
