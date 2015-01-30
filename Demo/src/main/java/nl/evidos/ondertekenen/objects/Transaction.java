@@ -2,6 +2,7 @@ package nl.evidos.ondertekenen.objects;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -12,6 +13,8 @@ import java.util.Arrays;
 public class Transaction implements ModelObject {
     @SerializedName("Id")
     private String id =null;
+    @SerializedName("Status")
+    private int status;
     @SerializedName("File")
     private FileInfo file;
     @SerializedName("Seal")
@@ -30,6 +33,12 @@ public class Transaction implements ModelObject {
     private int signRequestMode;
     @SerializedName("DaysToRemind")
     private int daysToRemind;
+    @SerializedName("CreatedDateTime")
+    private String createdDateTime;
+    @SerializedName("ModifiedDateTime")
+    private String modifiedDateTime;
+    @SerializedName("CanceledDateTime")
+    private String canceledDateTime;
 
     public Transaction (FileInfo fileInfo, Signer[] signers){
         this.file = fileInfo;
@@ -109,6 +118,22 @@ public class Transaction implements ModelObject {
     /* GENERATED GETTERS */
     public String getId() {
         return id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public String getModifiedDateTime() {
+        return modifiedDateTime;
+    }
+
+    public String getCanceledDateTime() {
+        return canceledDateTime;
     }
 
     public FileInfo getFile() {
