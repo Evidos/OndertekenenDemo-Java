@@ -10,8 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-
-    <groupId>evidos</groupId>
+	<groupId>evidos</groupId>
     <artifactId>demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 

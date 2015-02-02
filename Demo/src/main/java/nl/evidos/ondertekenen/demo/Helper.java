@@ -36,11 +36,11 @@ public class Helper {
      * @see nl.evidos.ondertekenen.objects.FileInfo
      */
     public static FileInfo createDemoFileInfo(){
-        return new FileInfo("test.pdf");
+        return new FileInfo("Input.pdf");
     }
 
     /**
-     * Createa demo transaction
+     * Create a demo transaction
      * @param fileInfo The {@code FileInfo} for the transaction
      * @param signers The {@code Signer} array for the transaction
      * @see nl.evidos.ondertekenen.objects.FileInfo

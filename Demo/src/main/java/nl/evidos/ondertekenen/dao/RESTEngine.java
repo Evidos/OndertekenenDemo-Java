@@ -58,9 +58,7 @@ public class RESTEngine {
                 T result = returnType.newInstance();
                 result.setData(clientResponse.getEntity(byte[].class));
                 return result;
-            } catch (InstantiationException e) {
-                LOGGER.error("Unable to instantiate object of type: " + returnType.getName(), e);
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 LOGGER.error("Unable to instantiate object of type: " + returnType.getName(), e);
             }
         }
@@ -92,7 +90,7 @@ public class RESTEngine {
      */
     private static Client createSSLClient(){
         ClientConfig clientConfig = new DefaultClientConfig();
-        SSLContext sslContext = null;
+        SSLContext sslContext;
         try {
             sslContext = SSLContext.getDefault();
         } catch (NoSuchAlgorithmException e) {

@@ -11,7 +11,7 @@ import java.io.File;
  * <pre>
  * Signhost.com is a service that makes it possible to digitally sign, seal or deliver
  * your documents. (http://www.signhost.com) Documents can be signed directly from your
- * webportal or by sending a signing request by email or other message to the end-user.
+ * web portal or by sending a signing request by email or other message to the end-user.
  *
  * In some countries signhost is branded by a locale domain, like ondertekenen.nl in
  * The Netherlands. In this document the signhost.com domain is replaceable by the
@@ -82,7 +82,6 @@ public interface OndertekenenClient {
      * Execute REST Call to upload a PDF
      * @param transaction The transaction for which the file should be appended
      * @param file The location of the file to upload
-     * @return Response object containing null upon success, and an ErrorMessage if something went wrong.
      */
     void uploadFile(Transaction transaction, File file);
 }

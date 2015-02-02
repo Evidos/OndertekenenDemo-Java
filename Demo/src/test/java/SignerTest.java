@@ -1,6 +1,5 @@
 import nl.evidos.ondertekenen.objects.Signer;
 import org.junit.Test;
-import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +11,7 @@ public class SignerTest {
 
     @Test(expected = java.lang.IllegalArgumentException.class)
     public void mobileNumberFormatNoCountryCode(){
-        Signer s = new Signer("email").mobile("0612345678");
+        new Signer("email").mobile("0612345678");
     }
 
     @Test

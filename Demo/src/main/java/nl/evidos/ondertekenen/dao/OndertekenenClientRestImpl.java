@@ -33,7 +33,6 @@ public class OndertekenenClientRestImpl implements OndertekenenClient {
     public static final String FILE_URL = "https://api.signhost.com/api/file/";
 
     private static final Logger LOGGER = LogManager.getLogger(OndertekenenClientRestImpl.class);
-    private Map<String, String> defaultHeaders = new HashMap<>();
     private RESTEngine restEngine = null;
     private Gson gson = new GsonBuilder().create();
 
@@ -44,6 +43,7 @@ public class OndertekenenClientRestImpl implements OndertekenenClient {
      * @param apiKey The api key, used in the HTTP Headers (authentication)
      */
     public OndertekenenClientRestImpl(String appName, String appKey, String apiKey){
+        Map<String, String> defaultHeaders = new HashMap<>();
         defaultHeaders.put("Application", "APPKey " + appName + " " + appKey);
         defaultHeaders.put("Authorization", "APIKey " + apiKey);
         restEngine = new RESTEngine(defaultHeaders);
@@ -150,9 +150,9 @@ public class OndertekenenClientRestImpl implements OndertekenenClient {
         WebResource.Builder webResourceBuilder = restEngine.getWebResourceBuilder(FILE_URL + transaction.getFile().getId());
         try {
             InputStream inputStream = new FileInputStream(file);
-            ClientResponse clientResponse = webResourceBuilder
+            webResourceBuilder
                     .type(MediaType.APPLICATION_JSON)
-                    .put(ClientResponse.class, file);
+                    .put(ClientResponse.class, inputStream);
         }catch (FileNotFoundException e) {
             LOGGER.error("Could not open PDF for uploading.", e);
         }catch(ClientHandlerException ce){

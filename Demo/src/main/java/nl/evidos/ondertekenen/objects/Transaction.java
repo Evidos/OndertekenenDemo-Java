@@ -76,7 +76,7 @@ public class Transaction implements JSONModelObject {
 
     /**
      * Set whether or not e-mail notifications should be sent to the sender
-     * @param enabled True if notifications should be anbled
+     * @param enabled True if notifications should be enabled
      * @return The modified transaction object containing the e-mail notification preferences
      */
     public Transaction sendEmailNotifications(boolean enabled){
