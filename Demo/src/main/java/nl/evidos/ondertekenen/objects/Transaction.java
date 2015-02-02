@@ -2,7 +2,6 @@ package nl.evidos.ondertekenen.objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -10,11 +9,11 @@ import java.util.Arrays;
  * https://api.signhost.com/Help/Api/POST-api-transaction
  * @author Yuri Meiburg
  */
-public class Transaction implements ModelObject {
+public class Transaction implements JSONModelObject {
     @SerializedName("Id")
     private String id =null;
     @SerializedName("Status")
-    private int status;
+    private TransactionStatus status;
     @SerializedName("File")
     private FileInfo file;
     @SerializedName("Seal")
@@ -120,7 +119,7 @@ public class Transaction implements ModelObject {
         return id;
     }
 
-    public int getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 

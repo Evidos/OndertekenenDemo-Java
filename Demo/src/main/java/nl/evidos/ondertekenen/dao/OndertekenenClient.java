@@ -3,7 +3,6 @@ package nl.evidos.ondertekenen.dao;
 import nl.evidos.ondertekenen.objects.*;
 
 import java.io.File;
-import java.net.URL;
 
 /**
  * A Client which interfaces with the Signhost API (in dutch branded Ondertekenen).
@@ -33,11 +32,11 @@ public interface OndertekenenClient {
 
     /**
      * Execute REST Call to get a Signed document for a given document ID
-     * @param documentID The Document ID
+     * @param fileID The Document ID
      * @param sendSignRequest If {@code true} the Sender and Signer will also receive a signed document and receipt by email.
      * @return A ModelObject containing a signed document with the given document ID
      */
-    Response<Document> getSignedDocument(String documentID, boolean sendSignRequest);
+    Document getSignedDocument(String fileID, boolean sendSignRequest);
 
     /**
      * Execute REST Call to get a Signed document for a given document ID
@@ -45,14 +44,14 @@ public interface OndertekenenClient {
      * @param sendSignRequest If {@code true} the Sender and Signer will also receive a signed document and receipt by email.
      * @return A ModelObject containing the receipt for the given document ID
      */
-    Response<Receipt> getReceipt(String documentID, boolean sendSignRequest);
+    Receipt getReceipt(String documentID, boolean sendSignRequest);
 
     /**
      * Execute REST Call to get a transaction by a transaction id.
      * @param transactionId The transaction ID
      * @return A ModelObject containing the transaction for the given transaction ID
      */
-    Response<Transaction> getTransaction(String transactionId);
+    Transaction getTransaction(String transactionId);
 
     /**
      * Execute REST Call to delete a transaction by a transaction id.
@@ -61,7 +60,7 @@ public interface OndertekenenClient {
      * @param reason The reason of the cancel.
      * @return The transaction that was removed
      */
-    Response<Transaction> deleteTransaction(String transactionId, boolean sendNotification, String reason);
+    Transaction deleteTransaction(String transactionId, boolean sendNotification, String reason);
 
     /**
      * Execute REST Call to delete a Transaction
@@ -70,14 +69,14 @@ public interface OndertekenenClient {
      * @param reason The reason of the cancel.
      * @return The transaction that was removed
      */
-    Response<Transaction> deleteTransaction(Transaction transaction, boolean sendNotification, String reason);
+    Transaction deleteTransaction(Transaction transaction, boolean sendNotification, String reason);
 
     /**
      * Execute REST Call to create a new transaction
      * @param transaction The data object containing all parameters to create a new transaction.
      * @return A new Transaction ID
      */
-    Response<Transaction> createTransaction(Transaction transaction);
+    Transaction createTransaction(Transaction transaction);
 
     /**
      * Execute REST Call to upload a PDF
@@ -85,5 +84,5 @@ public interface OndertekenenClient {
      * @param file The location of the file to upload
      * @return Response object containing null upon success, and an ErrorMessage if something went wrong.
      */
-    Response<ModelObject> uploadFile(Transaction transaction, File file);
+    void uploadFile(Transaction transaction, File file);
 }
