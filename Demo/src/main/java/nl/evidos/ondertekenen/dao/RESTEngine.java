@@ -20,12 +20,11 @@ import java.util.Map;
 
 
 /**
- * Created by Yuri Meiburg on 29-1-2015.
+ * Helper class which takes care of parsing data from the webservice.
  */
 public class RESTEngine {
 
     private static final Logger LOGGER = LogManager.getLogger(RESTEngine.class);
-    public static final String APPLICATION_PDF = "application/pdf";
     private static final String DEBUG_WSCALLS_PROPERTY = "nl.evidos.debug.webservice";
     private Client client = createSSLClient();
     private Gson gson;
@@ -60,8 +59,11 @@ public class RESTEngine {
                 return result;
             } catch (InstantiationException | IllegalAccessException e) {
                 LOGGER.error("Unable to instantiate object of type: " + returnType.getName(), e);
+                return null;
             }
         }
+
+        LOGGER.error("Encountered error: " + clientResponse.getEntity(String.class));
         return null;
     }
 
@@ -78,6 +80,7 @@ public class RESTEngine {
         if(clientResponse.getStatus() == 200) {
             return gson.fromJson(clientResponse.getEntity(String.class), returnType);
         }
+        LOGGER.error("Encountered error: " + clientResponse.getEntity(String.class));
         return null;
     }
 
