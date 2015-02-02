@@ -17,8 +17,8 @@ public class Helper {
      * @return A Signer array, containing 1 signer.
      */
     public static Signer[] createDemoSigners(){
-        return new Signer [] { new Signer("yuri@meiburg.nl")
-                .mobile("+31630789696")
+        return new Signer [] { new Signer("demo-email@address.com")
+                .mobile("+31612345678")
                 .requireScribble(false)
                 .requireEmailVerification(true)
                 .requireSMSVerification(false)
