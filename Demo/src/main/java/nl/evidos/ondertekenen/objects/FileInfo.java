@@ -3,8 +3,9 @@ package nl.evidos.ondertekenen.objects;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * TODO
- * Created by Yuri Meiburg on 28-1-2015.
+ * Data class containing a File meta-object, following:
+ * https://api.signhost.com/Help/
+ * @author Yuri Meiburg
  */
 public class FileInfo {
     @SerializedName("Name")

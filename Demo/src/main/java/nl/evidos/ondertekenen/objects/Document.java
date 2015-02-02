@@ -5,14 +5,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Arrays;
 
 /**
- * TODO
- * Created by Yuri Meiburg on 14-1-2015.
+ * Data class containing a Document object. This is a binary PDF file, following:
+ * https://api.signhost.com/Help/
+ * @author Yuri Meiburg
  */
 public class Document implements BinaryModelObject {
 
     @SerializedName("Id")
     private String documentId;
 
+    /* Not serialized data, because it is never part of a JSON document */
     private byte [] data;
 
     @Override

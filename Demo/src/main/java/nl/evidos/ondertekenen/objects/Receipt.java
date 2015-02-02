@@ -3,8 +3,10 @@ package nl.evidos.ondertekenen.objects;
 import java.util.Arrays;
 
 /**
- * TODO
- * Created by Yuri Meiburg on 23-1-2015.
+ * Data class containing a Receipt object, following:
+ * https://api.signhost.com/Help/
+ * Note: This is a binary PDF.
+ * @author Yuri Meiburg
  */
 public class Receipt implements BinaryModelObject{
     private byte[] data;

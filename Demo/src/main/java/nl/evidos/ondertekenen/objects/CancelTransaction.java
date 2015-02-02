@@ -3,7 +3,7 @@ package nl.evidos.ondertekenen.objects;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * The body for a 'Cancel Transaction' action.
+ * The body for a 'Cancel Transaction' action. (see: https://api.signhost.com/Help/Api/DELETE-api-transaction-transactionId)
  * @author Yuri Meiburg
  */
 public class CancelTransaction {
