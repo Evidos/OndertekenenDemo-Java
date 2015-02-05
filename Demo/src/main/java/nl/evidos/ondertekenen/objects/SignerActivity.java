@@ -1,60 +1,64 @@
 package nl.evidos.ondertekenen.objects;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.annotations.SerializedName;
 
 /**
- * TODO
- * Created by Yuri Meiburg on 23-1-2015.
+ * Data class containing Activity parameters, following:
+ * https://api.signhost.com/Help/Api/GET-api-transaction-transactionId
  */
-public enum SignerActivity {
-    UNKNOWN(-1),
-    INITIATION_SENT(101),
-    RECEIVED(102),
-    OPENED(103),
-    REMINDER_SENT(104),
-    CANCELLED(201),
-    REJECTED(202),
-    SIGNED(203),
-    SIGNED_DOCUMENT_SENT(301),
-    SIGNED_DOCUMENT_OPENED(302),
-    SIGNED_DOCUMENT_DOWNLOADED(303),
-    RECEIPT_SENT(401),
-    RECEIPT_OPENED(402),
-    RECEIPT_DOWNLOADED(403),
-    FINISHED(500),
-    DELETED(600),
-    EXPIRED(700),
-    FAILED(999);
+public class SignerActivity {
+    @SerializedName("Id")
+    private String id;
+    @SerializedName("Code")
+    private SignerActivityCode signerActivityCode;
+    @SerializedName("Activity")
+    private String activity;
+    @SerializedName("CreatedDateTime")
+    private String createdDateTime;
 
 
-    private static Map<Integer, SignerActivity> values = new HashMap<>();
-    private int statusCode = -1;
 
-    static {
-        for (SignerActivity signerActivity : values()) {
-            values.put(signerActivity.value(), signerActivity);
-        }
+    /* Generated getters/setters */
+
+    public String getId() {
+        return id;
     }
 
-    SignerActivity(int status) {
-        this.statusCode = status;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int value() {
-        return statusCode;
+    public SignerActivityCode getSignerActivityCode() {
+        return signerActivityCode;
     }
 
-    public static SignerActivity toTransactionStatus(int statusCode) {
-        return values.containsKey(statusCode) ? values.get(statusCode) : UNKNOWN;
+    public void setSignerActivityCode(SignerActivityCode signerActivityCode) {
+        this.signerActivityCode = signerActivityCode;
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
+    public String getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public void setCreatedDateTime(String createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
     @Override
     public String toString() {
         return "SignerActivity{" +
-                "statusCode=" + statusCode +
-                ", name=" + name() +
+                "id='" + id + '\'' +
+                ", signerActivityCode=" + signerActivityCode +
+                ", activity='" + activity + '\'' +
+                ", createdDateTime='" + createdDateTime + '\'' +
                 '}';
     }
 }
-

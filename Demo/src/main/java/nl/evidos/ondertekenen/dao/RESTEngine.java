@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
+import nl.evidos.ondertekenen.gson.SignerActivityCodeDeserializer;
 import nl.evidos.ondertekenen.gson.TransactionStatusDeserializer;
 import nl.evidos.ondertekenen.objects.*;
 import org.apache.logging.log4j.LogManager;
@@ -39,6 +40,7 @@ public class RESTEngine {
         gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(TransactionStatus.class, new TransactionStatusDeserializer())
+                .registerTypeAdapter(SignerActivityCode.class, new SignerActivityCodeDeserializer())
                 .create();
     }
 

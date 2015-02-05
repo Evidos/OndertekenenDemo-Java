@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
+
 /**
  * Data class containing Signer parameters, following:
  * https://api.signhost.com/Help/Api/POST-api-transaction
@@ -11,20 +13,24 @@ import org.apache.logging.log4j.Logger;
 public class Signer {
     private static final Logger LOGGER = LogManager.getLogger(Signer.class);
 
-    @SerializedName("EMail")
+    @SerializedName("Id")
+    private String id = null;
+    @SerializedName("Email")
     private String eMail = null;
-    @SerializedName("mobile")
+    @SerializedName("Mobile")
     private String mobile = null;
-    @SerializedName("requireScribble")
+    @SerializedName("RequireScribble")
     private boolean requireScribble;
     @SerializedName("RequireEmailVerification")
-    private boolean requireEmailVerification; // NOT IMPLEMENTED YET
-    @SerializedName("RequireSMSVerification")
+    private boolean requireEmailVerification;
+    @SerializedName("RequireSmsVerification")
     private boolean requireSMSVerification;
     @SerializedName("SendSignRequest")
     private boolean sendSignRequest;
     @SerializedName("SignRequestMessage")
     private String signRequestMessage;
+    @SerializedName("DaysToRemind")
+    private int daysToRemind;
     @SerializedName("SendSignConfirmation")
     private boolean sendSignConfirmation;
     @SerializedName("Language")
@@ -37,6 +43,20 @@ public class Signer {
     private String reference;
     @SerializedName("ReturnUrl")
     private String returnUrl;
+    @SerializedName("RejectReason")
+    private String rejectReason;
+    @SerializedName("SignUrl")
+    private String signUrl;
+    @SerializedName("SignedDateTime")
+    private String signedDateTime;
+    @SerializedName("RejectDateTime")
+    private String rejectDateTime;
+    @SerializedName("CreatedDateTime")
+    private String createdDateTime;
+    @SerializedName("ModifiedDateTime")
+    private String modifiedDateTime;
+    @SerializedName("Activities")
+    private SignerActivity [] activities;
 
     /**
      * Constructor for Signer
@@ -164,8 +184,40 @@ public class Signer {
 
     /* GENERATED GETTERS */
 
+    public String getId() {
+        return id;
+    }
+
+    public int getDaysToRemind() {
+        return daysToRemind;
+    }
+
     public String getEMail() {
         return eMail;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public String getSignUrl() {
+        return signUrl;
+    }
+
+    public String getSignedDateTime() {
+        return signedDateTime;
+    }
+
+    public String getRejectDateTime() {
+        return rejectDateTime;
+    }
+
+    public String getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public String getModifiedDateTime() {
+        return modifiedDateTime;
     }
 
     public String getMobile() {
@@ -216,23 +268,36 @@ public class Signer {
         return returnUrl;
     }
 
+    public SignerActivity[] getActivities() {
+        return activities;
+    }
+
     /** GENERATED TO-STRING **/
     @Override
     public String toString() {
         return "Signer{" +
-                "eMail='" + eMail + '\'' +
+                "id='" + id + '\'' +
+                ", eMail='" + eMail + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", requireScribble=" + requireScribble +
                 ", requireEmailVerification=" + requireEmailVerification +
                 ", requireSMSVerification=" + requireSMSVerification +
                 ", sendSignRequest=" + sendSignRequest +
                 ", signRequestMessage='" + signRequestMessage + '\'' +
+                ", daysToRemind=" + daysToRemind +
                 ", sendSignConfirmation=" + sendSignConfirmation +
                 ", language='" + language + '\'' +
                 ", scribbleName='" + scribbleName + '\'' +
                 ", scribbleNameFixed=" + scribbleNameFixed +
                 ", reference='" + reference + '\'' +
                 ", returnUrl='" + returnUrl + '\'' +
+                ", rejectReason='" + rejectReason + '\'' +
+                ", signUrl='" + signUrl + '\'' +
+                ", signedDateTime='" + signedDateTime + '\'' +
+                ", rejectDateTime='" + rejectDateTime + '\'' +
+                ", createdDateTime='" + createdDateTime + '\'' +
+                ", modifiedDateTime='" + modifiedDateTime + '\'' +
+                ", activities=" + Arrays.toString(activities) +
                 '}';
     }
 }
