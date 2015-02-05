@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO
+ * Enumeration containing all possible Signer Activities.
  * Created by Yuri Meiburg on 23-1-2015.
  */
 public enum SignerActivityCode {
