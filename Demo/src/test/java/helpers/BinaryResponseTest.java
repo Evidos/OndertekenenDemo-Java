@@ -5,7 +5,7 @@ import nl.evidos.ondertekenen.objects.BinaryModelObject;
 /**
  * Created by Yuri Meiburg on 12-2-2015.
  */
-public class BinaryResponseTest implements BinaryModelObject {
+public class BinaryResponseTest extends BinaryModelObject {
     byte [] data;
     @Override
     public void setData(byte[] data) {

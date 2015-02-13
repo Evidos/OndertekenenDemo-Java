@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Note: This is a binary PDF.
  * @author Yuri Meiburg
  */
-public class Receipt implements BinaryModelObject{
+public class Receipt extends BinaryModelObject{
     private byte[] data;
 
     @Override

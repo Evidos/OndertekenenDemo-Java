@@ -9,7 +9,7 @@ import java.util.Arrays;
  * https://api.signhost.com/Help/Api/POST-api-transaction
  * @author Yuri Meiburg
  */
-public class Transaction implements JSONModelObject {
+public class Transaction extends JSONModelObject {
     @SerializedName("Id")
     private String id =null;
     @SerializedName("Status")
@@ -42,6 +42,16 @@ public class Transaction implements JSONModelObject {
     public Transaction (FileInfo fileInfo, Signer[] signers){
         this.file = fileInfo;
         this.signers = signers;
+    }
+
+    /**
+     * Set the transaction ID
+     * @param id the ID the document should contain
+     * @return The modified transaction object containing the ID
+     */
+    public Transaction id(String id){
+        this.id = id;
+        return this;
     }
 
     /**

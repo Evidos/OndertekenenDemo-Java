@@ -9,7 +9,7 @@ import java.util.Arrays;
  * https://api.signhost.com/Help/
  * @author Yuri Meiburg
  */
-public class Document implements BinaryModelObject {
+public class Document extends BinaryModelObject {
 
     @SerializedName("Id")
     private String documentId;

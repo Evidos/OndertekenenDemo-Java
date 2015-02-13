@@ -75,10 +75,18 @@ public class RESTEngine {
                 LOGGER.error("Unable to instantiate object of type: " + returnType.getName(), e);
                 return null;
             }
-        }
+        }else{
+            LOGGER.error("Response contained error: " + clientResponse.getEntity(String.class));
+            try {
+                T returnT = returnType.newInstance();
+                returnT.setError(gson.fromJson(clientResponse.getEntity(String.class), ErrorMessage.class));
+                return returnT;
+            } catch (InstantiationException | IllegalAccessException e) {
+                LOGGER.error("Unable to instantiate object of type: " + returnType.getName(), e);
+                return null;
+            }
 
-        LOGGER.error("Encountered error: " + clientResponse.getEntity(String.class));
-        return null;
+        }
     }
 
     /**
@@ -93,9 +101,16 @@ public class RESTEngine {
         /* Handle response */
         if(clientResponse.getStatus() == 200) {
             return gson.fromJson(clientResponse.getEntity(String.class), returnType);
+        }else{
+            try {
+                T returnT = returnType.newInstance();
+                returnT.setError(gson.fromJson(clientResponse.getEntity(String.class), ErrorMessage.class));
+                return returnT;
+            } catch (InstantiationException | IllegalAccessException e) {
+                LOGGER.error("Unable to instantiate object of type: " + returnType.getName(), e);
+                return null;
+            }
         }
-        LOGGER.error("Encountered error: " + clientResponse.getEntity(String.class));
-        return null;
     }
 
     /**

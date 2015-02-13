@@ -7,5 +7,19 @@ import java.io.Serializable;
  * in this demo is the toString(), therefor this interface has no methods.
  * @author Yuri Meiburg
  */
-public interface ModelObject extends Serializable {
+public abstract class ModelObject implements Serializable {
+    ErrorMessage errorMessage = null;
+
+    public boolean isOk(){
+        return errorMessage == null;
+    }
+
+    public ErrorMessage getErrorMessage(){
+        return errorMessage;
+    }
+
+    public void setError(ErrorMessage errorMessage){
+        this.errorMessage = errorMessage;
+    }
+
 }

@@ -17,6 +17,11 @@ public class FileInfo {
         this.name = name;
     }
 
+    public FileInfo withId(String id){
+        this.id = id;
+        return this;
+    }
+
     public String getName() {
         return name;
     }

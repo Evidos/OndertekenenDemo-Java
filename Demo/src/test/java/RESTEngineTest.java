@@ -71,7 +71,7 @@ public class RESTEngineTest {
                         0x62, 0x79, 0x21, 0x20, 0x2d,
                         0x2d, 0x20, 0x44, 0x75, 0x6b,
                         0x65, 0x20, 0x4e, 0x75, 0x6b,
-                        0x65, 0x6d,});
+                        0x65, 0x6d});
         RESTEngine restEngine = new RESTEngine(null, Client.create());
         BinaryResponseTest binaryResponseTest = restEngine.handleBinaryResponse(clientResponseMock, BinaryResponseTest.class);
         assertEquals("Hail to the king, baby! -- Duke Nukem", binaryResponseTest.getStringData());

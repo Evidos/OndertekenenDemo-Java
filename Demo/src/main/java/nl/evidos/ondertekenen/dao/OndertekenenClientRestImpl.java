@@ -157,7 +157,7 @@ public class OndertekenenClientRestImpl implements OndertekenenClient {
         }catch (FileNotFoundException e) {
             LOGGER.error("Could not open PDF for uploading.", e);
         }catch(ClientHandlerException ce){
-            LOGGER.error("Cannot connect to the webservice, returning empty document.", ce);
+            LOGGER.error("Cannot connect to the webservice.", ce);
         }
 
     }
