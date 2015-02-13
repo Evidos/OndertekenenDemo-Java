@@ -27,15 +27,27 @@ public class RESTEngine {
 
     private static final Logger LOGGER = LogManager.getLogger(RESTEngine.class);
     private static final String DEBUG_WSCALLS_PROPERTY = "nl.evidos.debug.webservice";
-    private Client client = createSSLClient();
+    private Client client;
     private Gson gson;
     private Map<String, String> defaultHeaders;
+
+
+    /**
+     * Create a RESTEngine object, which has default headers appended to every call.
+     * Initialize a default SSL Client
+     * @param defaultHeaders A Map of the headers
+     */
+    public RESTEngine (Map<String, String> defaultHeaders){
+        this(defaultHeaders, createSSLClient());
+    }
 
     /**
      * Create a RESTEngine object, which has default headers appended to every call
      * @param defaultHeaders A Map of the headers
+     * @param client The client that will be used for all REST calls
      */
-    public RESTEngine (Map<String, String> defaultHeaders){
+    public RESTEngine (Map<String, String> defaultHeaders, Client client){
+        this.client = client;
         this.defaultHeaders = defaultHeaders;
         gson = new GsonBuilder()
                 .setPrettyPrinting()

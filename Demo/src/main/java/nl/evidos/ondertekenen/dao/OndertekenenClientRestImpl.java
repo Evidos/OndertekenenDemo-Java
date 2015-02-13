@@ -8,6 +8,11 @@ import com.sun.jersey.api.client.WebResource;
 import nl.evidos.ondertekenen.objects.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 
 import javax.ws.rs.core.MediaType;
 import java.io.File;
@@ -27,10 +32,11 @@ import java.util.Map;
 public class OndertekenenClientRestImpl implements OndertekenenClient {
 
     /* Urls for the REST Api */
-    public static final String DOCUMENT_URL = "https://api.signhost.com/api/file/document/";
-    public static final String RECEIPT_URL = "https://api.signhost.com/api/receipt/";
-    public static final String TRANSACTION_URL = "https://api.signhost.com/api/transaction/";
-    public static final String FILE_URL = "https://api.signhost.com/api/file/";
+
+    @Value("${document.url}")  private String DOCUMENT_URL;
+    @Value("${receipt.url}")  private String RECEIPT_URL;
+    @Value("${transaction.url}") private String TRANSACTION_URL;
+    @Value("${file.url}") private String FILE_URL;
 
     private static final Logger LOGGER = LogManager.getLogger(OndertekenenClientRestImpl.class);
     private RESTEngine restEngine = null;
@@ -38,15 +44,10 @@ public class OndertekenenClientRestImpl implements OndertekenenClient {
 
     /**
      * Create a DAO object for Ondertekenen using REST implementation.
-     * @param appName The application name, used in the HTTP Headers (authentication)
-     * @param appKey The application key, used in the HTTP Headers (authentication)
-     * @param apiKey The api key, used in the HTTP Headers (authentication)
+     * @param restEngine The RESTEngine object used for the REST requests
      */
-    public OndertekenenClientRestImpl(String appName, String appKey, String apiKey){
-        Map<String, String> defaultHeaders = new HashMap<>();
-        defaultHeaders.put("Application", "APPKey " + appName + " " + appKey);
-        defaultHeaders.put("Authorization", "APIKey " + apiKey);
-        restEngine = new RESTEngine(defaultHeaders);
+    public OndertekenenClientRestImpl(RESTEngine restEngine){
+        this.restEngine = restEngine;
     }
 
     /**

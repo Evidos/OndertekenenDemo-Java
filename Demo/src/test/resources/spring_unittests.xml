@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="api.properties" />
+
+    <bean id="defaultHeaderMap" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="Application" value="12345" />
+                <entry key="Authorization" value="54321" />
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="simpleClient" class="com.sun.jersey.api.client.Client" />
+
+    <bean id="restEngine" class="nl.evidos.ondertekenen.dao.RESTEngine">
+        <constructor-arg ref="defaultHeaderMap" />
+        <constructor-arg ref="simpleClient" />
+    </bean>
+
+    <bean id="ondertekenenClient" class="nl.evidos.ondertekenen.dao.OndertekenenClientRestImpl">
+        <constructor-arg ref="restEngine" />
+    </bean>
+
+
+
+</beans>
