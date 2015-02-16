@@ -1,12 +1,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="ondertekenenClient" class="nl.evidos.ondertekenen.dao.OndertekenenClientRestImpl">
-        <constructor-arg value="APPLICATION_NAME_HERE" />    <!-- App name -->
-        <constructor-arg value="APP_KEY_HERE" /> <!-- App Key -->
-        <constructor-arg value="API_KEY_HERE" /> <!-- Api Key -->
+    <bean id="ondertekenenClient"
+          class="nl.yurimeiburg.ondertekenen.dao.OndertekenenClientFactory"
+          factory-method="build">
+        <constructor-arg>
+            <map>
+                <entry key="Application" value="APPKey APP_NAME_HERE APP_KEY_HERE" />
+                <entry key="Authorization" value="APIKey API_KEY_HERE" />
+            </map>
+        </constructor-arg>
     </bean>
+
 
 </beans>

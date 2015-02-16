@@ -11,15 +11,14 @@
     </parent>
 
 	<groupId>yurimeiburg.ondertekenen</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>client</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <dependencies>
-
         <dependency>
-            <groupId>yurimeiburg.ondertekenen</groupId>
-            <artifactId>client</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-bundle</artifactId>
         </dependency>
 
         <dependency>
@@ -30,6 +29,17 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -39,7 +49,23 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.xebialabs.restito</groupId>
+            <artifactId>restito</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 
     <build>
         <plugins>
