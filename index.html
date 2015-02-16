@@ -5,6 +5,8 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Ondertekenendemo : Demo implementation for the Ondertekenen.nl REST interface.">
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -31,12 +33,110 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>Demo implementation for the Ondertekenen.nl REST interface. Signhost.com is a service that makes it possible to digitally sign, seal or deliver your documents. (<a href="http://www.signhost.com">http://www.signhost.com</a>) Documents can be signed directly from your webportal or by sending a signing request by email or other message to the end-user.</p>
+        <h2 id="ondertekenenclient"><strong>OndertekenenClient</strong></h2>
+
+<h2 id="what-is-ondertekenenclient">What is OndertekenenClient?</h2>
+
+<p>OndertekenenClient is a Java client-library for the ondertekenen.nl service. It is written in Java 1.8, using the Jersey client as basis.</p>
+
+
+
+<h2 id="what-is-ondertekenennl">What is Ondertekenen.nl?</h2>
+
+<p><strong>This text is copied from <a href="https://www.signhost.com">https://www.signhost.com</a>:</strong></p>
+
+<p>Signhost.com is a service that makes it possible to digitally sign, seal or deliver your documents. (<a href="http://www.signhost.com">http://www.signhost.com</a>) Documents can be signed directly from your webportal or by sending a signing request by email or other message to the end-user.</p>
 
 <p>In some countries signhost is branded by a locale domain, like ondertekenen.nl in The Netherlands. In this document the signhost.com domain is replaceable by the local promoted domains like ondertekenen.nl.</p>
 
 <p>During the signing process of the end-user, different identity verification methods can be used to include in the digital signature ie; email, SMS, scribble signature or authentication mechanisms like Google, LinkedIn, and national eID like DigiD(NL) or eHerkenning(NL).</p>
-      </section>
+
+<p>The service is available via our GUI based online portal: <a href="https://login.signhost.com/">https://login.signhost.com/</a> or via several gateways to connect directly from a third party system.</p>
+
+<p><a href="https://api.signhost.com/">This</a> document describes the Signhost REST API implementation.</p>
+
+<p>The REST API is the underlying interface for all of our official Signhost API methods. It’s the most direct way to access the API.</p>
+
+<p>This reference document is designed for those interested in developing for solutions using the SignHost.com REST Api Signing feature or for those interested in exploring Ondertekenen.nl integration features in detail.</p>
+
+<p>Further details about the methods can be found <a href="https://api.signhost.com/Help">here</a></p>
+
+
+
+<h2 id="integrating-the-client">Integrating the client</h2>
+
+<ol>
+<li>Download and unpack the Client from <a href="https://github.com/YuriMB/OndertekenenDemo/archive/master.zip">GitHub</a> .</li>
+<li>Build and install the Client using <a href="https://maven.apache.org/index.html">Maven</a>.</li>
+<li><p>Add the following dependency to your own Maven project file:</p>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;yurimeiburg.ondertekenen&lt;/groupId&gt;
+    &lt;artifactId&gt;client&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></li>
+<li><p>There is also a <code>Demo</code> project, to use as a starting point.</p></li>
+</ol>
+
+<h2 id="examples">Examples</h2>
+
+<p><strong>Generic error handling</strong> <br>
+All data objects inherit from the abstract class <code>ModelObject</code>. This class provides some basic error-handling. All calls should be checked if they executed properly, using the <code>isOk()</code> method. This function returns <code>true</code> if the call succeeded, <code>false</code> otherwise.</p>
+
+<p>If an error occurred, the exact message can be obtained using the method <code>getErrorMessage()</code>.</p>
+
+<p>In some cases the returning object is <code>null</code>. If this happens, there is a fatal error, such as no connectivity to the web service.</p>
+
+<p><strong>Creating a transaction</strong> <br>
+Transactions can be created using <code>new Transaction(FileInfo, Signer [])</code>, and then using a builder pattern can be modified with extra parameters, e.g.:</p>
+
+<pre><code>Transaction t = new Transaction(fileInfo, signers)
+        .seal(true)
+        .reference("Contract #123")
+        .sendEmailNotifications(true)
+        .daysToExpire(90)
+        .signRequestMode(1)
+        .daysToReminder(7);
+</code></pre>
+
+<p>With this object, we can send a request to the server to generate a new transaction. This is done as follows:</p>
+
+<pre><code>Transaction transaction = ondertekenenClient.createTransaction(t);
+</code></pre>
+
+<p><strong>Retrieving a transaction</strong> <br>
+Transactions can be retrieved based in their ID. This is useful for polling the current state. The <code>Demo</code> program demonstrates this by blocking further execution until the Transaction is signed or cancelled.</p>
+
+<pre><code>Transaction transaction = ondertekenenClient.getTransaction("my-id");
+</code></pre>
+
+<p><strong>Deleting a transaction</strong> <br>
+Transactions are deleted based on their ID. If the transaction was successfully deleted, the transaction will be returned. You must specify whether or not you want to notify the user of this action, and the reason for the deletion:</p>
+
+<pre><code>boolean shouldNotify = true;
+String message = "Sent the wrong contract.";
+ondertekenenClient.deleteTransaction(transaction, shouldNotify, message);
+</code></pre>
+
+<p><strong>Uploading a file</strong> <br>
+To upload a file, you must specify a File object with the location of the PDF to upload. If uploading went successful the function will return <code>true</code>, <code>false</code> otherwise.</p>
+
+<pre><code>if (!ondertekenenClient.uploadFile(transaction, new File("test.pdf"){
+    LOGGER.error("Oops, something went wrong!);
+}
+</code></pre>
+
+<p><strong>Download proof</strong> <br>
+After the user has signed or cancelled, you can download the signed document + a receipt. These files are binaries, and should be written to disk/database/etc. This is also demonstrated in the <code>Demo</code> module.</p>
+
+<pre><code>/* Send an email notifying the users of this action */
+boolean sendSignRequest = true; 
+
+Document signedDocument = ondertekenenClient.getSignedDocument(transaction.getFile().getId(), sendSignRequest);
+
+Receipt receipt = ondertekenenClient.getReceipt(transaction.getId(), sendSignRequest);
+</code></pre>      </section>
     </div>
 
     <!-- FOOTER  -->
