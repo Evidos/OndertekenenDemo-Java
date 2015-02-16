@@ -39,6 +39,8 @@ public class Transaction extends JSONModelObject {
     @SerializedName("CanceledDateTime")
     private String canceledDateTime;
 
+    public Transaction(){}
+
     public Transaction (FileInfo fileInfo, Signer[] signers){
         this.file = fileInfo;
         this.signers = signers;

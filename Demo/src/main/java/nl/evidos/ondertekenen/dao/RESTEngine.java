@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.net.ssl.SSLContext;
+import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
@@ -76,7 +77,6 @@ public class RESTEngine {
                 return null;
             }
         }else{
-            LOGGER.error("Response contained error: " + clientResponse.getEntity(String.class));
             try {
                 T returnT = returnType.newInstance();
                 returnT.setError(gson.fromJson(clientResponse.getEntity(String.class), ErrorMessage.class));
@@ -106,7 +106,7 @@ public class RESTEngine {
                 T returnT = returnType.newInstance();
                 returnT.setError(gson.fromJson(clientResponse.getEntity(String.class), ErrorMessage.class));
                 return returnT;
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch ( InstantiationException | IllegalAccessException e) {
                 LOGGER.error("Unable to instantiate object of type: " + returnType.getName(), e);
                 return null;
             }

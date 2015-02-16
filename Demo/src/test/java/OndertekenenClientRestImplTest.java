@@ -2,6 +2,7 @@ import com.xebialabs.restito.semantics.Action;
 import com.xebialabs.restito.semantics.Condition;
 import com.xebialabs.restito.server.StubServer;
 import com.xebialabs.restito.support.junit.NeedsServer;
+import junit.framework.Assert;
 import nl.evidos.ondertekenen.dao.OndertekenenClient;
 import nl.evidos.ondertekenen.demo.Helper;
 import nl.evidos.ondertekenen.objects.*;
@@ -80,6 +81,11 @@ public class OndertekenenClientRestImplTest {
                 .then(status(HttpStatus.OK_200),
                         stringContent(TEST_STRING),
                         contentType(MediaType.APPLICATION_OCTET_STREAM)
+                );
+
+        whenHttp(server)
+                .match(endsWithUri("INVALID-ID"))
+                .then(status(HttpStatus.NOT_FOUND_404), stringContent("{\"Message\":\"INVALID ID\"}")
                 );
     }
 
@@ -202,6 +208,26 @@ public class OndertekenenClientRestImplTest {
                 .once(uri("/api/file/123321")
                         , method(Method.PUT)
                         , Condition.withHeader("Application", "12345")
-                        , Condition.withHeader("Authorization", "54321"));
+                        , Condition.withHeader("Authorization", "54321")
+                        , Condition.withPostBodyContaining("\"Hail to the king, baby!\" -- Duke Nukem"));
+    }
+
+    @Test
+    @NeedsServer
+    public void testErrorScenario(){
+        /* Test invalid transaction */
+        Transaction transaction = ondertekenenClient.getTransaction("INVALID-ID");
+        assertEquals(false, transaction.isOk());
+        assertEquals("INVALID ID", transaction.getErrorMessage().getMessage());
+
+        /* Test invalid receipt */
+        Receipt receipt = ondertekenenClient.getReceipt("INVALID-ID", false);
+        assertEquals(false, receipt.isOk());
+        assertEquals("INVALID ID", receipt.getErrorMessage().getMessage());
+
+        /* Test invalid document */
+        Document document = ondertekenenClient.getSignedDocument("INVALID-ID", false);
+        assertEquals(false, document.isOk());
+        assertEquals("INVALID ID", document.getErrorMessage().getMessage());
     }
 }
