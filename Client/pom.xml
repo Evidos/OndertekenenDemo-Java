@@ -6,14 +6,14 @@
 
     <parent>
         <groupId>yurimeiburg.ondertekenen</groupId>
-        <artifactId>ondertekenen</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>Ondertekenen</artifactId>
+        <version>0.1.0</version>
 		<relativePath>../ParentPom/pom.xml</relativePath>
     </parent>
 
 	<groupId>yurimeiburg.ondertekenen</groupId>
-    <artifactId>client</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>OndertekenenClient</artifactId>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -76,6 +76,38 @@
                 <configuration>
                     <show>private</show>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals><goal>jar-no-fork</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals><goal>jar</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <phase>deploy</phase>
+                        <goals><goal>deploy</goal></goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

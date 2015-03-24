@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>yurimeiburg.ondertekenen</groupId>
-    <artifactId>ondertekenen</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>Ondertekenen</artifactId>
+    <version>0.1.0</version>
     <packaging>pom</packaging>
 
     <properties>
