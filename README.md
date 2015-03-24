@@ -1,4 +1,4 @@
-**OndertekenenClient**
+**OndertekenenClient** [![Build Status](https://travis-ci.org/YuriMB/OndertekenenDemo.svg?branch=master)](https://travis-ci.org/YuriMB/OndertekenenDemo) [![Maven Download](https://img.shields.io/github/tag/YuriMB/OndertekenenDemo.svg?label=maven)](https://jitpack.io/#YuriMB/OndertekenenDemo/v0.1.0)
 ---
 
 
@@ -6,9 +6,6 @@ What is OndertekenenClient?
 ---
 OndertekenenClient is a Java client-library for the ondertekenen.nl service. It is written in Java 1.8, using the Jersey client as basis.
 
-Current build status
----
-[![Build Status](https://travis-ci.org/YuriMB/OndertekenenDemo.svg?branch=master)](https://travis-ci.org/YuriMB/OndertekenenDemo)
 
 What is Ondertekenen.nl?
 ---
