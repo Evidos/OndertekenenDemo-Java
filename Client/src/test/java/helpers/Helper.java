@@ -17,7 +17,7 @@ public class Helper {
      * @return A Signer array, containing 1 signer.
      */
     public static Signer[] createDemoSigners(){
-        return new Signer [] { new Signer("yuri@meiburg.nl")
+        return new Signer [] { new Signer("john.doe@example.com")
                 .mobile("+31612345678")
                 .requireScribble(false)
                 .requireEmailVerification(true)
@@ -25,9 +25,9 @@ public class Helper {
                 .sendSignRequest(true, "Will you please sign this document for me?")
                 .sendSignConfirmation(true)
                 .language("nl-NL")
-                .scribbleName("Yuri Meiburg", false)
+                .scribbleName("John Doe", false)
                 .reference("12344321")
-                .returnUrl("http://www.yurimeiburg.nl/") };
+                .returnUrl("https://example.com/thanks.php") };
     }
 
     /**
