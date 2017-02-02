@@ -8,7 +8,7 @@ import java.io.File;
 
 /**
  * A Client which interfaces with the Signhost API (in dutch branded Ondertekenen).
- *
+ * <p>
  * Description from SignHost:
  * <pre>
  * Signhost.com is a service that makes it possible to digitally sign, seal or deliver
@@ -28,21 +28,23 @@ import java.io.File;
  * </pre>
  *
  * @author Yuri Meiburg
- *
  */
 public interface OndertekenenClient {
 
     /**
-     * Execute REST Call to get a Signed document for a given document ID
-     * @param fileID The Document ID
+     * Execute REST Call to get a Signed document for a given document ID (belonging to the given transaction id)
+     *
+     * @param transactionID   The transaction ID
+     * @param fileID          The Document ID
      * @param sendSignRequest If {@code true} the Sender and Signer will also receive a signed document and receipt by email.
      * @return A ModelObject containing a signed document with the given document ID
      */
-    Document getSignedDocument(String fileID, boolean sendSignRequest);
+    Document getSignedDocument(String transactionID, String fileID, boolean sendSignRequest);
 
     /**
      * Execute REST Call to get a Signed document for a given document ID
-     * @param documentID The Document ID
+     *
+     * @param documentID      The Document ID
      * @param sendSignRequest If {@code true} the Sender and Signer will also receive a signed document and receipt by email.
      * @return A ModelObject containing the receipt for the given document ID
      */
@@ -50,6 +52,7 @@ public interface OndertekenenClient {
 
     /**
      * Execute REST Call to get a transaction by a transaction id.
+     *
      * @param transactionId The transaction ID
      * @return A ModelObject containing the transaction for the given transaction ID
      */
@@ -57,24 +60,27 @@ public interface OndertekenenClient {
 
     /**
      * Execute REST Call to delete a transaction by a transaction id.
-     * @param transactionId The transaction ID
+     *
+     * @param transactionId    The transaction ID
      * @param sendNotification True if notifications should be sent of the cancelling.
-     * @param reason The reason of the cancel.
+     * @param reason           The reason of the cancel.
      * @return The transaction that was removed
      */
     Transaction deleteTransaction(String transactionId, boolean sendNotification, String reason);
 
     /**
      * Execute REST Call to delete a Transaction
-     * @param transaction The transaction to be deleted
+     *
+     * @param transaction      The transaction to be deleted
      * @param sendNotification True if notifications should be sent of the cancelling.
-     * @param reason The reason of the cancel.
+     * @param reason           The reason of the cancel.
      * @return The transaction that was removed
      */
     Transaction deleteTransaction(Transaction transaction, boolean sendNotification, String reason);
 
     /**
      * Execute REST Call to create a new transaction
+     *
      * @param transaction The data object containing all parameters to create a new transaction.
      * @return A new Transaction ID
      */
@@ -82,8 +88,17 @@ public interface OndertekenenClient {
 
     /**
      * Execute REST Call to upload a PDF
+     *
      * @param transaction The transaction for which the file should be appended
-     * @param file The location of the file to upload
+     * @param file        The location of the file to upload
      */
     boolean uploadFile(Transaction transaction, File file);
+
+    /**
+     * Start a transaction with the given transactionId
+     *
+     * @param transactionId the transaction id which should be started
+     * @return true if succesful, false otherwise
+     */
+    boolean startTransaction(String transactionId);
 }

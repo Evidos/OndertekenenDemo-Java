@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Data class containing a File meta-object, following:
  * https://api.signhost.com/Help/
+ *
  * @author Yuri Meiburg
  */
 public class FileInfo {
@@ -13,11 +14,11 @@ public class FileInfo {
     @SerializedName("Id")
     private String id = null;
 
-    public FileInfo(String name){
+    public FileInfo(String name) {
         this.name = name;
     }
 
-    public FileInfo withId(String id){
+    public FileInfo withId(String id) {
         this.id = id;
         return this;
     }

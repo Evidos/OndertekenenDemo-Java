@@ -20,6 +20,7 @@
         <mockito-version>1.9.5</mockito-version>
         <restito.version>0.4-alpha-2</restito.version>
         <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
+        <lombok.version>1.16.12</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -28,6 +29,12 @@
                 <groupId>com.sun.jersey</groupId>
                 <artifactId>jersey-bundle</artifactId>
                 <version>${jersey-bundle.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
 
             <dependency>

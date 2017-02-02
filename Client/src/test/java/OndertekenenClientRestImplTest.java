@@ -15,19 +15,18 @@ import org.junit.runner.RunWith;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
-import static com.xebialabs.restito.builder.verify.VerifyHttp.verifyHttp;
-import static com.xebialabs.restito.semantics.Action.contentType;
-import static com.xebialabs.restito.semantics.Action.status;
-import static com.xebialabs.restito.semantics.Action.stringContent;
-import static com.xebialabs.restito.semantics.Condition.*;
-import static junit.framework.TestCase.assertEquals;
+import sun.misc.Regexp;
 
 import javax.annotation.Resource;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.net.URISyntaxException;
+
+import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
+import static com.xebialabs.restito.builder.verify.VerifyHttp.verifyHttp;
+import static com.xebialabs.restito.semantics.Action.*;
+import static com.xebialabs.restito.semantics.Condition.*;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Created by Yuri Meiburg on 12-2-2015.
@@ -45,9 +44,9 @@ public class OndertekenenClientRestImplTest {
     OndertekenenClient ondertekenenClient;
 
     @Before
-    public void init(){
+    public void init() {
         /* Create server object */
-       server = new StubServer(DEFAULT_TEST_PORT).run();
+        server = new StubServer(DEFAULT_TEST_PORT).run();
         whenHttp(server)
                 .match(post("/api/transaction/"))
                 .then(status(HttpStatus.OK_200), stringContent("{ Id: 12345 }")
@@ -67,7 +66,7 @@ public class OndertekenenClientRestImplTest {
                         contentType(MediaType.APPLICATION_OCTET_STREAM)
                 );
         whenHttp(server)
-                .match(startsWithUri("/api/file/document/"),
+                .match(startsWithUri("/api/transaction/454545/file/123123"),
                         method(Method.GET))
                 .then(status(HttpStatus.OK_200),
                         stringContent(TEST_STRING),
@@ -82,13 +81,13 @@ public class OndertekenenClientRestImplTest {
                 );
 
         whenHttp(server)
-                .match(endsWithUri("INVALID-ID"))
+                .match(matchesUri(new Regexp(".*INVALID-ID.*")))
                 .then(status(HttpStatus.NOT_FOUND_404), stringContent("{\"Message\":\"INVALID ID\"}")
                 );
     }
 
     @After
-    public void breakDown(){
+    public void breakDown() {
         server.stop();
     }
 
@@ -179,14 +178,14 @@ public class OndertekenenClientRestImplTest {
     @NeedsServer
     public void testIfGetSignedDocumentWorks() {
 
-        Document signedDocument = ondertekenenClient.getSignedDocument("454545", false);
+        Document signedDocument = ondertekenenClient.getSignedDocument("454545", "123123", false);
 
         /* Verify result object */
         assertEquals(TEST_STRING, new String(signedDocument.getData()));
 
         /* Verify REST call */
         verifyHttp(server)
-                .once(uri("/api/file/document/454545")
+                .once(uri("/api/transaction/454545/file/123123")
                         , method(Method.GET)
                         , Condition.withHeader("Application", "12345")
                         , Condition.withHeader("Authorization", "54321"));
@@ -198,12 +197,14 @@ public class OndertekenenClientRestImplTest {
     @Test
     @NeedsServer
     public void testIfUploadFileWorks() throws URISyntaxException {
-        ondertekenenClient.uploadFile(new Transaction(new FileInfo("sample.txt").withId("123321"),null),
+
+        ondertekenenClient.uploadFile(
+                Transaction.builder().id("123321").build(),
                 new File(this.getClass().getResource("sample.txt").toURI()));
 
         /* Verify REST call */
         verifyHttp(server)
-                .once(uri("/api/file/123321")
+                .once(uri("/api/transaction/123321/file/sample.txt")
                         , method(Method.PUT)
                         , Condition.withHeader("Application", "12345")
                         , Condition.withHeader("Authorization", "54321")
@@ -212,7 +213,7 @@ public class OndertekenenClientRestImplTest {
 
     @Test
     @NeedsServer
-    public void testErrorScenario(){
+    public void testErrorScenario() {
         /* Test invalid transaction */
         Transaction transaction = ondertekenenClient.getTransaction("INVALID-ID");
         assertEquals(false, transaction.isOk());
@@ -224,7 +225,7 @@ public class OndertekenenClientRestImplTest {
         assertEquals("INVALID ID", receipt.getErrorMessage().getMessage());
 
         /* Test invalid document */
-        Document document = ondertekenenClient.getSignedDocument("INVALID-ID", false);
+        Document document = ondertekenenClient.getSignedDocument("INVALID-ID", "123", false);
         assertEquals(false, document.isOk());
         assertEquals("INVALID ID", document.getErrorMessage().getMessage());
     }

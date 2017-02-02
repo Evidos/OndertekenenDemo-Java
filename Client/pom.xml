@@ -8,10 +8,10 @@
         <groupId>yurimeiburg.ondertekenen</groupId>
         <artifactId>Ondertekenen</artifactId>
         <version>0.1.0</version>
-		<relativePath>../ParentPom/pom.xml</relativePath>
+        <relativePath>../ParentPom/pom.xml</relativePath>
     </parent>
 
-	<groupId>yurimeiburg.ondertekenen</groupId>
+    <groupId>yurimeiburg.ondertekenen</groupId>
     <artifactId>OndertekenenClient</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
@@ -45,6 +45,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -84,7 +90,9 @@
                     <execution>
                         <id>attach-sources</id>
                         <phase>package</phase>
-                        <goals><goal>jar-no-fork</goal></goals>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -94,7 +102,9 @@
                     <execution>
                         <id>attach-javadocs</id>
                         <phase>package</phase>
-                        <goals><goal>jar</goal></goals>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -105,7 +115,9 @@
                     <execution>
                         <id>deploy</id>
                         <phase>deploy</phase>
-                        <goals><goal>deploy</goal></goals>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

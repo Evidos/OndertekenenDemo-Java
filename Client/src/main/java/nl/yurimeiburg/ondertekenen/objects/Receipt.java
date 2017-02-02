@@ -6,9 +6,10 @@ import java.util.Arrays;
  * Data class containing a Receipt object, following:
  * https://api.signhost.com/Help/
  * Note: This is a binary PDF.
+ *
  * @author Yuri Meiburg
  */
-public class Receipt extends BinaryModelObject{
+public class Receipt extends BinaryModelObject {
     private byte[] data;
 
     @Override

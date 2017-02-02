@@ -3,11 +3,11 @@
 
     <Appenders>
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{dd MMM yyyy HH:mm:ss} %-5p - %c - %m%n" />
+            <PatternLayout pattern="%d{dd MMM yyyy HH:mm:ss} %-5p - %c - %m%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="org.springframework" level="info" />
+        <Logger name="org.springframework" level="info"/>
 
         <Root level="debug">
             <appender-ref ref="STDOUT"/>

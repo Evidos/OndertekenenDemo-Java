@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Data class containing Error messages
+ *
  * @author Yuri Meiburg
  */
 public class ErrorMessage extends JSONModelObject {

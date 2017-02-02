@@ -7,6 +7,7 @@ import java.util.Arrays;
 /**
  * Data class containing a Document object. This is a binary PDF file, following:
  * https://api.signhost.com/Help/
+ *
  * @author Yuri Meiburg
  */
 public class Document extends BinaryModelObject {
@@ -15,7 +16,7 @@ public class Document extends BinaryModelObject {
     private String documentId;
 
     /* Not serialized data, because it is never part of a JSON document */
-    private byte [] data;
+    private byte[] data;
 
     @Override
     public String toString() {
@@ -26,7 +27,7 @@ public class Document extends BinaryModelObject {
     }
 
     @Override
-    public void setData(byte [] data) {
+    public void setData(byte[] data) {
         this.data = data;
     }
 

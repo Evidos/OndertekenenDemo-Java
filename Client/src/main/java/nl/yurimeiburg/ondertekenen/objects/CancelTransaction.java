@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * The body for a 'Cancel Transaction' action. (see: https://api.signhost.com/Help/Api/DELETE-api-transaction-transactionId)
+ *
  * @author Yuri Meiburg
  */
 public class CancelTransaction {
@@ -11,16 +12,17 @@ public class CancelTransaction {
     private boolean sendNotification;
 
     @SerializedName("Reason")
-    private String reason= null;
+    private String reason = null;
 
     /**
      * Construct a CancelTransaction object
+     *
      * @param sendNotification True if sender and recipient should be notified of the cancel action
-     * @param reason Reason to mention for cancelling the transaction.
+     * @param reason           Reason to mention for cancelling the transaction.
      */
-    public CancelTransaction(boolean sendNotification, String reason){
-        this.sendNotification=sendNotification;
-        this.reason=reason;
+    public CancelTransaction(boolean sendNotification, String reason) {
+        this.sendNotification = sendNotification;
+        this.reason = reason;
     }
 
     public boolean isSendNotification() {

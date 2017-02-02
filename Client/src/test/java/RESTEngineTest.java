@@ -46,7 +46,7 @@ public class RESTEngineTest {
         RESTEngine restEngine = new RESTEngine(defaultHeaders, Client.create());
 
         LOGGER.debug("Calling localhost server");
-        WebResource.Builder webResourceBuilder= restEngine.getWebResourceBuilder("http://localhost:" + DEFAULT_TEST_PORT + "/test");
+        WebResource.Builder webResourceBuilder = restEngine.getWebResourceBuilder("http://localhost:" + DEFAULT_TEST_PORT + "/test");
         webResourceBuilder.get(String.class);
 
         verifyHttp(server).once(
