@@ -1,4 +1,4 @@
-**OndertekenenClient** [![Build Status](https://travis-ci.org/YuriMB/OndertekenenDemo.svg?branch=master)](https://travis-ci.org/YuriMB/OndertekenenDemo) [![Maven Download](https://img.shields.io/github/tag/YuriMB/OndertekenenDemo.svg?label=maven)](https://jitpack.io/#YuriMB/OndertekenenDemo/v0.1.0)
+**OndertekenenClient** 
 ---
 
 
