@@ -1,8 +1,6 @@
 package nl.yurimeiburg.ondertekenen.dao;
 
-import nl.yurimeiburg.ondertekenen.objects.Document;
-import nl.yurimeiburg.ondertekenen.objects.Receipt;
-import nl.yurimeiburg.ondertekenen.objects.Transaction;
+import nl.yurimeiburg.ondertekenen.objects.*;
 
 import java.io.File;
 
@@ -93,6 +91,15 @@ public interface OndertekenenClient {
      * @param file        The location of the file to upload
      */
     boolean uploadFile(Transaction transaction, File file);
+
+    /**
+     * Execute REST Call to upload metadata for a PDF with identifier
+     *
+     * @param transaction   The transaction for which the file should be appended
+     * @param fileMetaData  The metadata
+     * @param fileIdentifier    The file identifier
+     */
+    boolean uploadFileMetaData(Transaction transaction, FileMetaData fileMetaData, String fileIdentifier);
 
     /**
      * Start a transaction with the given transactionId

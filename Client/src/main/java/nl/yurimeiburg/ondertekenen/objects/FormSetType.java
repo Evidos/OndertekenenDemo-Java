@@ -1,5 +1,6 @@
 package nl.yurimeiburg.ondertekenen.objects;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.ToString;
 
 import java.util.HashMap;
@@ -7,9 +8,13 @@ import java.util.Map;
 
 @ToString
 public enum FormSetType {
+    @SerializedName("Seal")
     SEAL("Seal"),
+    @SerializedName("Signature")
     SIGNATURE("Signature"),
+    @SerializedName("Check")
     CHECK("Check"),
+    @SerializedName("SingleLine")
     SINGLE_LINE("SingleLine"),
     UNKNOWN("Unknown");
 

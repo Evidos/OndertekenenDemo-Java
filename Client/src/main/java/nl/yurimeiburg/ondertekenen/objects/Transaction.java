@@ -34,11 +34,11 @@ public class Transaction extends JSONModelObject {
     @SerializedName("PostbackUrl")
     private String postbackUrl;
     @SerializedName("SignRequestMode")
-    private int signRequestMode = 2;
+    private Integer signRequestMode = 2;
     @SerializedName("DaysToExpire")
-    private int daysToExpire = 60;
+    private Integer daysToExpire = 60;
     @SerializedName("SendEmailNotifications")
-    private boolean sendEmailNotifications = false;
+    private Boolean sendEmailNotifications = false;
     @SerializedName("Status")
     private TransactionStatus status;
     @SerializedName("Context")

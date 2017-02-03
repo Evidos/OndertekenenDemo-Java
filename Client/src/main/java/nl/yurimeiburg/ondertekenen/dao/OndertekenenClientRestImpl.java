@@ -5,10 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import nl.yurimeiburg.ondertekenen.objects.CancelTransaction;
-import nl.yurimeiburg.ondertekenen.objects.Document;
-import nl.yurimeiburg.ondertekenen.objects.Receipt;
-import nl.yurimeiburg.ondertekenen.objects.Transaction;
+import nl.yurimeiburg.ondertekenen.objects.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -158,6 +155,24 @@ public class OndertekenenClientRestImpl implements OndertekenenClient {
         } catch (FileNotFoundException e) {
             LOGGER.error("Could not open PDF for uploading.", e);
             return false;
+        } catch (ClientHandlerException ce) {
+            LOGGER.error("Cannot connect to the webservice.", ce);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean uploadFileMetaData(Transaction transaction, FileMetaData fileMetaData, String identifier) {
+        LOGGER.info("Uploading File Metadata: " + fileMetaData + " for file: " + identifier);
+        WebResource.Builder webResourceBuilder = restEngine.getWebResourceBuilder(MessageFormat.format(FILE_URL, transaction.getId(), identifier));
+        try {
+            webResourceBuilder
+                    .type(MediaType.APPLICATION_JSON)
+                    .put(ClientResponse.class, gson.toJson(fileMetaData));
         } catch (ClientHandlerException ce) {
             LOGGER.error("Cannot connect to the webservice.", ce);
             return false;

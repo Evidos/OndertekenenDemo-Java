@@ -98,7 +98,7 @@ public class OndertekenenClientRestImplTest {
     @NeedsServer
     public void testIfCreateTransactionWorks() {
 
-        Transaction t = ondertekenenClient.createTransaction(Helper.createDemoTransaction(Helper.createDemoFileInfo(), Helper.createDemoSigners()));
+        Transaction t = ondertekenenClient.createTransaction(Helper.createDemoTransaction(Helper.createDemoSigners()));
         /* Verify result object */
         assertEquals("12345", t.getId());
 

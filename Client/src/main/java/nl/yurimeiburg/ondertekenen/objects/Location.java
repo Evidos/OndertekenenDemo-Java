@@ -1,27 +1,29 @@
 package nl.yurimeiburg.ondertekenen.objects;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class Location {
     @SerializedName("Search")
     String search;
     @SerializedName("Occurence")
-    int occurence;
+    Integer occurence;
     @SerializedName("Top")
-    int top;
+    Integer top;
     @SerializedName("Right")
-    int right;
+    Integer right;
     @SerializedName("Bottom")
-    int bottom;
+    Integer bottom;
     @SerializedName("Left")
-    int left;
+    Integer left;
     @SerializedName("Width")
-    int width;
+    Integer width;
     @SerializedName("Height")
-    int height;
+    Integer height;
     @SerializedName("PageNumber")
-    int pageNumber;
+    Integer pageNumber;
 
 }

@@ -1,6 +1,5 @@
 package helpers;
 
-import nl.yurimeiburg.ondertekenen.objects.FileInfo;
 import nl.yurimeiburg.ondertekenen.objects.Signer;
 import nl.yurimeiburg.ondertekenen.objects.Transaction;
 
@@ -33,27 +32,16 @@ public class Helper {
         };
     }
 
-    /**
-     * Create a new FileInfo object
-     *
-     * @return return a main.java.demo {@code FileInfo} object.
-     * @see nl.yurimeiburg.ondertekenen.objects.FileInfo
-     */
-    public static FileInfo createDemoFileInfo() {
-        return new FileInfo("Input.pdf");
-    }
 
     /**
      * Create a main.java.demo transaction
      *
-     * @param fileInfo The {@code FileInfo} for the transaction
      * @param signers  The {@code Signer} array for the transaction
      * @return a main.java.demo {@code Transaction} object
-     * @see nl.yurimeiburg.ondertekenen.objects.FileInfo
      * @see nl.yurimeiburg.ondertekenen.objects.Signer
      * @see nl.yurimeiburg.ondertekenen.objects.Transaction
      */
-    public static Transaction createDemoTransaction(FileInfo fileInfo, Signer[] signers) {
+    public static Transaction createDemoTransaction(Signer[] signers) {
         return Transaction.builder()
                 .signers(signers)
                 .seal(true)

@@ -8,6 +8,7 @@ import nl.yurimeiburg.ondertekenen.objects.TransactionStatus;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -94,9 +95,9 @@ public class TransactionTest {
         assertEquals(true, transaction.isSeal());
         assertEquals("Contract #123", transaction.getReference());
         assertEquals("http://example.com/postback.php", transaction.getPostbackUrl());
-        assertEquals(2, transaction.getSignRequestMode());
-        assertEquals(30, transaction.getDaysToExpire());
-        assertEquals(true, transaction.isSendEmailNotifications());
+        assertEquals(new Integer(2), transaction.getSignRequestMode());
+        assertEquals(new Integer(30), transaction.getDaysToExpire());
+        assertTrue(transaction.getSendEmailNotifications());
 
         // Superficially check if signer is loaded. Actual test is in SignerTest
         assertEquals(1, transaction.getSigners().length);

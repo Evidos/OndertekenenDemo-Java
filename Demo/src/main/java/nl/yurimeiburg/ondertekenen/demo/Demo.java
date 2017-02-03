@@ -50,32 +50,44 @@ class Demo {
     private Demo(OndertekenenClient ondertekenenClient) {
 
         /* Create a new transaction */
-        Transaction transaction = ondertekenenClient.createTransaction(
-                Helper.createDemoTransaction(
-                        Helper.createDemoFileInfo(),
-                        Helper.createDemoSigners()
-                ));
+        Transaction transaction = ondertekenenClient.createTransaction(Helper.createDemoTransaction(Helper.createDemoSigners()));
 
-        if (transaction == null)
-            throw new RuntimeException("Could not create a new transaction.");
+        if (!transaction.isOk())
+            throw new RuntimeException("Could not create a new transaction: " + transaction.getErrorMessage());
 
         LOGGER.info("Created a new transaction, with ID: " + transaction.getId());
 
         /* Get the newly created transaction */
         transaction = ondertekenenClient.getTransaction(transaction.getId());
-        LOGGER.info("Got the following transaction from server: " + (transaction.getId()));
+        LOGGER.info("Got the following transaction from server: " + transaction);
 
-        /* Upload a file! */
-        if (ondertekenenClient.uploadFile(transaction, Helper.getDemoFile())) {
+        /* Upload multiple files! */
+        if (ondertekenenClient.uploadFileMetaData(transaction, Helper.getMetaDataDemo(transaction.getSigners()[0].getId()), "Input.pdf")) {
+            LOGGER.info("Successfully uploaded FormSet for transaction " + transaction.getId());
+        } else {
+            LOGGER.error("Could not upload FormSet. Deleting transaction: "
+                    + ondertekenenClient.deleteTransaction(transaction, true, "Testing."));
+            return;
+        }
+
+        LOGGER.info(ondertekenenClient.getTransaction(transaction.getId()));
+
+        if (ondertekenenClient.uploadFile(transaction, Helper.getPDFDemoFile())) {
             LOGGER.info("Successfully uploaded PDF for transaction " + transaction.getId());
         } else {
-            LOGGER.error("Could not upload PDF. Deleting transaction: " + ondertekenenClient.deleteTransaction(transaction, true, "Testing."));
+            LOGGER.error("Could not upload PDF. Deleting transaction: "
+                    + ondertekenenClient.deleteTransaction(transaction, true, "Testing."));
             return;
         }
 
         /* Verify that the file is now in the transaction */
         transaction = ondertekenenClient.getTransaction(transaction.getId());
         LOGGER.info("Got the following transaction from server: " + (transaction));
+        if (transaction.getFiles().size() != 1) {
+            LOGGER.error("Got an unexpected filecount, deleting transaction: "
+                    + ondertekenenClient.deleteTransaction(transaction, true, "Files were not uploaded OK."));
+            return;
+        }
 
         /* Start the transaction */
         ondertekenenClient.startTransaction(transaction.getId());

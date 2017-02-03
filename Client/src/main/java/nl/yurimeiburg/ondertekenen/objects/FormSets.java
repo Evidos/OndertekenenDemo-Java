@@ -1,13 +1,15 @@
 package nl.yurimeiburg.ondertekenen.objects;
-// TODO Remove?
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Map;
-
-@Builder
+/**
+ * Created by yuri on 2/3/2017.
+ */
 @Data
-public class FormSet {
-    Map<String, FormSetField> formSetFieldMap;
+@Builder
+public class FormSets {
+    @SerializedName("FormSets")
+    private String [] formSets;
 }

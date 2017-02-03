@@ -9,8 +9,8 @@
           factory-method="build">
         <constructor-arg>
             <map>
-                <entry key="Application" value="APPKey APP_NAME_HERE APP_KEY_HERE" />
-                <entry key="Authorization" value="APIKey API_KEY_HERE" />
+                <entry key="Application" value="APPKey yuritest g3xBwNd7OhSzPauaez9PxdtBzmEO69mw" />
+                <entry key="Authorization" value="APIKey p1QgDzuhgwt9288toy5QNNPwv3ooPvZj" />
             </map>
         </constructor-arg>
     </bean>
