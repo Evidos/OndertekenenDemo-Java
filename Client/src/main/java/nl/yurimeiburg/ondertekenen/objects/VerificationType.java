@@ -1,36 +1,24 @@
 package nl.yurimeiburg.ondertekenen.objects;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.ToString;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ToString
 public enum VerificationType {
-    IDEAL("iDeal"),
+    @SerializedName("iDEAL")
+    IDEAL("iDEAL"),
+    @SerializedName("iDIN")
     IDIN("iDIN"),
     UNKNOWN("Unknown");
 
+    private String value;
 
-    private static Map<String, VerificationType> values = new HashMap<>();
-    private String code = "";
-
-    static {
-        for (VerificationType verificationType : values()) {
-            values.put(verificationType.value(), verificationType);
-        }
+    VerificationType(String value) {
+        this.value = value;
     }
 
-    VerificationType(String code) {
-        this.code = code;
-    }
-
-    public String value() {
-        return code;
-    }
-
-    public static VerificationType toVerificationCode(String statusCode) {
-        return values.containsKey(statusCode) ? values.get(statusCode) : UNKNOWN;
+    public String getValue() {
+        return value;
     }
 
 }

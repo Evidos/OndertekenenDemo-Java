@@ -203,7 +203,6 @@ public class OndertekenenClientRestImpl implements OndertekenenClient {
         try {
             Properties properties = new Properties();
             properties.load(getClass().getClassLoader().getResourceAsStream(API_PROPERTIES_LOCATION));
-            DOCUMENT_URL = properties.getProperty("document.url");
             RECEIPT_URL = properties.getProperty("receipt.url");
             FILE_URL = properties.getProperty("file.url");
             TRANSACTION_URL = properties.getProperty("transaction.url");

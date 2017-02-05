@@ -8,10 +8,10 @@
         <groupId>yurimeiburg.ondertekenen</groupId>
         <artifactId>Ondertekenen</artifactId>
         <version>0.1.0</version>
-		<relativePath>../ParentPom/pom.xml</relativePath>
+        <relativePath>../ParentPom/pom.xml</relativePath>
     </parent>
 
-	<groupId>yurimeiburg.ondertekenen</groupId>
+    <groupId>yurimeiburg.ondertekenen</groupId>
     <artifactId>OndertekenenDemo</artifactId>
     <version>0.1.0</version>
 
@@ -40,7 +40,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-  </dependencies>
+    </dependencies>
 
     <build>
         <plugins>

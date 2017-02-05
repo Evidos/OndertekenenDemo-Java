@@ -1,9 +1,9 @@
 package nl.yurimeiburg.ondertekenen.objects;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 
-@Data
+@AllArgsConstructor
 public class Verification {
 
     @SerializedName("Type")

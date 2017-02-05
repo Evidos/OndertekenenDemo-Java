@@ -7,8 +7,8 @@ import lombok.Data;
 @Builder
 @Data
 public class FileEntry {
-    @SerializedName("Links") // TODO update to correct type
-    private Object[] links;
+    @SerializedName("Links")
+    private Link[] links;
     @SerializedName("DisplayName")
     private String displayName;
 }

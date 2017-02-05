@@ -3,7 +3,10 @@ import com.xebialabs.restito.server.StubServer;
 import com.xebialabs.restito.support.junit.NeedsServer;
 import helpers.Helper;
 import nl.yurimeiburg.ondertekenen.dao.OndertekenenClient;
-import nl.yurimeiburg.ondertekenen.objects.*;
+import nl.yurimeiburg.ondertekenen.objects.Document;
+import nl.yurimeiburg.ondertekenen.objects.Receipt;
+import nl.yurimeiburg.ondertekenen.objects.Transaction;
+import nl.yurimeiburg.ondertekenen.objects.TransactionStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.grizzly.http.Method;
@@ -27,6 +30,7 @@ import static com.xebialabs.restito.builder.verify.VerifyHttp.verifyHttp;
 import static com.xebialabs.restito.semantics.Action.*;
 import static com.xebialabs.restito.semantics.Condition.*;
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Created by Yuri Meiburg on 12-2-2015.
@@ -35,7 +39,6 @@ import static junit.framework.TestCase.assertEquals;
 @ContextConfiguration(locations = "classpath:spring_unittests.xml")
 @ComponentScan
 public class OndertekenenClientRestImplTest {
-    private static final int DEFAULT_TEST_PORT = 50080;
     private final String TEST_STRING = "Hail to the king, baby! -- Duke Nukem";
     private static final Logger LOGGER = LogManager.getLogger(OndertekenenClientRestImplTest.class);
     private StubServer server = null;
@@ -46,7 +49,7 @@ public class OndertekenenClientRestImplTest {
     @Before
     public void init() {
         /* Create server object */
-        server = new StubServer(DEFAULT_TEST_PORT).run();
+        server = new StubServer(50080).run();
         whenHttp(server)
                 .match(post("/api/transaction/"))
                 .then(status(HttpStatus.OK_200), stringContent("{ Id: 12345 }")
@@ -111,6 +114,52 @@ public class OndertekenenClientRestImplTest {
     }
 
     /**
+     * Test if adding metadata to a transaction works
+     */
+    @Test
+    @NeedsServer
+    public void testIfUploadingMetadataWorks() {
+
+        boolean b = ondertekenenClient.uploadFileMetaData(
+                Transaction
+                        .builder()
+                        .id("123123")
+                        .build(),
+                Helper.getMetaDataDemo("person1"),
+                "file1");
+        /* Verify result object */
+        assertTrue(b);
+
+        /* Verify REST call */
+        verifyHttp(server)
+                .once(uri("/api/transaction/123123/file/file1")
+                        , method(Method.PUT)
+                        , Condition.withHeader("Content-Type", "application/json")
+                        , Condition.withHeader("Application", "12345")
+                        , Condition.withHeader("Authorization", "54321"));
+    }
+
+    /**
+     * Test if a transaction can be started
+     */
+    @Test
+    @NeedsServer
+    public void testIfTransactionCanBeStarted() {
+
+        boolean b = ondertekenenClient.startTransaction("123123");
+        /* Verify result object */
+        assertTrue(b);
+
+        /* Verify REST call */
+        verifyHttp(server)
+                .once(uri("/api/transaction/123123/start")
+                        , method(Method.PUT)
+                        , Condition.withHeader("Application", "12345")
+                        , Condition.withHeader("Authorization", "54321"));
+    }
+
+
+    /**
      * Test if we can retrieve a transaction
      */
     @Test
@@ -138,7 +187,7 @@ public class OndertekenenClientRestImplTest {
     @NeedsServer
     public void testIfDeleteTransactionWorks() {
 
-        Transaction t = ondertekenenClient.deleteTransaction("12345", false, null);
+        Transaction t = ondertekenenClient.deleteTransaction(Transaction.builder().id("12345").build(), false, null);
 
         /* Verify result object */
         assertEquals("12345", t.getId());

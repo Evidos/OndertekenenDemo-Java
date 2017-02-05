@@ -39,6 +39,11 @@ public class Helper {
                 .scribbleName("John Doe")
                 .scribbleNameFixed(false)
                 .reference("12344321")
+                .verifications(new Verification[]{
+                        IDINVerification
+                                .builder()
+                                .build()
+                })
                 .returnUrl("https://example.com/thanks.php").build()
         };
     }
@@ -120,6 +125,7 @@ public class Helper {
         formSets.put("SecondSigner", getDemoFormSet2());
         return formSets;
     }
+
     public static FileMetaData getMetaDataDemo(String signerId) {
         return FileMetaData
                 .builder()
