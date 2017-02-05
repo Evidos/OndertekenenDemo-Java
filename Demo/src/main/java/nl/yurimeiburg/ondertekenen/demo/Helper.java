@@ -59,9 +59,9 @@ public class Helper {
                 .build();
     }
 
-    public static File getPDFDemoFile() {
+    public static File getPDFDemoFile(String fileName) {
         try {
-            URL location = Helper.class.getClassLoader().getResource("Input.pdf");
+            URL location = Helper.class.getClassLoader().getResource(fileName);
             if (location == null) {
                 LOGGER.error("File does not exist, returning empty File");
                 return new File("");

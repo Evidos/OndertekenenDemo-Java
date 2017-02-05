@@ -68,7 +68,13 @@ class Demo {
             LOGGER.error("Could not upload FormSet. Deleting transaction: " + ondertekenenClient.deleteTransaction(transaction, true, "Testing."));
             return;
         }
-        if (ondertekenenClient.uploadFile(transaction, Helper.getPDFDemoFile())) {
+        if (ondertekenenClient.uploadFile(transaction, Helper.getPDFDemoFile("Input.pdf"))) {
+            LOGGER.info("Successfully uploaded PDF for transaction " + transaction.getId());
+        } else {
+            LOGGER.error("Could not upload PDF. Deleting transaction: " + ondertekenenClient.deleteTransaction(transaction, true, "Testing."));
+            return;
+        }
+        if (ondertekenenClient.uploadFile(transaction, Helper.getPDFDemoFile("Input2.pdf"))) {
             LOGGER.info("Successfully uploaded PDF for transaction " + transaction.getId());
         } else {
             LOGGER.error("Could not upload PDF. Deleting transaction: " + ondertekenenClient.deleteTransaction(transaction, true, "Testing."));
