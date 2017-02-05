@@ -56,6 +56,7 @@ public class Helper {
                 .sendEmailNotifications(true)
                 .daysToExpire(90)
                 .signRequestMode(1)
+                .postbackUrl("https://requestb.in/1fcnglg1") // NOTE: Add your own postback url!
                 .build();
     }
 
